@@ -19,15 +19,16 @@ VM images include the custom R packages and Python libraries from Machine Learni
 4. From the list of virtual machines, choose the VM image providing the operating system and version of Machine Learning Server you want to install.
 5. Accept the terms and get started by clicking Create.
 6. Follow the onscreen prompts to provision the VM.
-  - Nombre: msmlserver
-  - Región: South Central US (porque 'latencia')
-  - Tipo D3S_v2 (poco menos de $2.00 pesos la hora)
+
+  - Nombre: `msmlserver`
+  - Región: `South Central US` (porque 'latencia')
+  - Tipo de VM: `D3S_v2` (poco menos de $2.00 pesos la hora)
   - Si ya tienes recursos creados en tu cuenta de Azure, el Wizard te permitirá asignar Network Security Groups, Resource Groups y Storage Accounts que ya tengas creadas. De lo contrario, deja los defaults.
-  - Para este ejemplo, deja el tipo de autenticación con **Password**
+  - Para este ejemplo, deja el tipo de autenticación con `**Password**`
 
 ## Verificando la instalación
 7. Conéctate a la VM usando la IP pública (pronto le pondremos un nombre para darle la vuelta a la IP dinámica que te da Azure y no pagar por una fija)
-8. Ejecuta el comando `Revo64`. Si tienes una salida como ésta:
+8. Ejecuta el comando `$ Revo64`. Si tienes una salida como ésta:
 ```
 Loading Microsoft Machine Learning Server packages, version 9.3.0.
 Type 'readme()' for release notes, privacy() for privacy policy, or
