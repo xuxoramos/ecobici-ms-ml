@@ -1,5 +1,8 @@
 # Ejecutando este ejemplo con Microsoft Machine Learning Server 9.3.0
-Este ejemplo pretende crear un regresor para predecir tiempos de viaje con los datos de ecobici, utilizando Microsoft Machine Learning Server 9.3.0 en una VM de Azure.
+Este ejemplo pretende crear un regresor para predecir tiempos de viaje con los datos de ecobici, utilizando Microsoft Machine Learning Server 9.3.0 en una VM de Azure. Distribuiremos los datos de ecobici mediante un shared Azure File en mi propio storage account.
+
+### ¿Por qué Azure File y no Azure Blob?
+La intención de este ejemplo es comparar codo a codo _vanilla R_ y el backend de R del Microsoft Machine Learning Server. Para ello, debemos tener este setup lo más posible al típico ambiente local de _vanilla R_ que usaríamos si los datos de ecobici no fueran tan grandes, y eso implica que no tendremos ayuda del poder de un filesystem distribuído como [Azure Blob Storage](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-python), porque nos obligaría a trabajar con Spark + R Server (que es el actual Machine Learning Server), en detrimento del propósito final del experimento.
 
 ## Prerrequisitos
 - Una cuenta de Azure. Si no la tienes, puedes abrir un trial [aquí](https://azure.microsoft.com/en-us/offers/ms-azr-0044p/)
@@ -74,7 +77,7 @@ Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstu
 ## Permitiendo el acceso al dataset desde Microsoft Machine Learning Server
 El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici_2010_2017.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
 
-Para poder acceder al dataset desde el MSML en Linux, debemos crear un **mount persistente** para que se vea como un directorio del OS.
+Para poder acceder al dataset desde la VM con el MSML en Linux, debemos crear un **mount persistente** para que se vea como un directorio del OS.
 
 1. Hacer `ssh` a tu VM que tiene el MS Machine Learning Server. Si has seguido esta guía, debe ser `ssh ecobici@rstudioserver.southcentralus.cloudapp.azure.com`
 2. Instalar `cifs-utils`
@@ -82,16 +85,12 @@ Para poder acceder al dataset desde el MSML en Linux, debemos crear un **mount p
 sudo apt-get update
 sudo apt-get install cifs-utils
 ```
-3. Crea un mount point en el server usando `sudo mkdir /mnt/ecobici-data`
+3. Crea un mount point en la VM usando `sudo mkdir /mnt/ecobici-data`
 4. Probar el mount point con el siguiente comando
 ```
 sudo mount -t cifs //msmldiag167.file.core.windows.net/ecobici-file-share /mnt/ecobici-data -o vers=2.1,username=msmldiag167,password=“Nh4JtXDnVDU1bx/SJbQG+syEYGSLHhen8Qo/+0QGSrjolhl93maUgN97RKXJcHvfNoJyxvs9ApPnodhW/2gC2w==“,dir_mode=0755,file_mode=0755
 ```
 Lo que va a hacer este comando es crear un _mount volume_ de **mi propio storage account** a **tu VM en Azure**. Esto lo hacemos para evitar que tengas que descargar los 16GB y más bien te conectes directito al file share que yo cree.
 
-Si acaso esto no sirviera, entonces será necesario descargar el dataset y crear el file share en **tu propia storage account**. Refiérete a [esta documentación para ello](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-file-share#Create%20file%20share%20through%20the%20Portal)
-
-## Clonando el repo y bajando el proyecto
-El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici_2010_2017.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
-
+Si acaso esto no sirviera, entonces será necesario descargar el dataset, y crear el file share en **tu propia storage account**. Refiérete a [esta documentación para ello](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-file-share#Create%20file%20share%20through%20the%20Portal).
 
