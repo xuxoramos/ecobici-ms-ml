@@ -20,11 +20,13 @@ VM images include the custom R packages and Python libraries from Machine Learni
 5. Accept the terms and get started by clicking Create.
 6. Follow the onscreen prompts to provision the VM.
 
-  - Nombre: `msmlserver`
-  - Región: `South Central US` (porque 'latencia')
-  - Tipo de VM: `D3S_v2` (poco menos de $2.00 pesos la hora)
-  - Si ya tienes recursos creados en tu cuenta de Azure, el Wizard te permitirá asignar Network Security Groups, Resource Groups y Storage Accounts que ya tengas creadas. De lo contrario, deja los defaults.
-  - Para este ejemplo, deja el tipo de autenticación con `**Password**`
+### Input recomendados para el Setup Wizard
+- Nombre: `msmlserver`
+- Usuario: `ecobici`
+- Región: `South Central US` (porque 'latencia')
+- Tipo de VM: `D3S_v2` (poco menos de $2.00 pesos la hora)
+- Si ya tienes recursos creados en tu cuenta de Azure, el Wizard te permitirá asignar Network Security Groups, Resource Groups y Storage Accounts que ya tengas creadas. De lo contrario, deja los defaults.
+- Para este ejemplo, deja el tipo de autenticación con `**Password**`
 
 ## Verificando la instalación
 7. Conéctate a la VM usando la IP pública (pronto le pondremos un nombre para darle la vuelta a la IP dinámica que te da Azure y no pagar por una fija)
@@ -69,6 +71,32 @@ Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e
 
 Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
 
+## Permitiendo el acceso al dataset desde Microsoft Machine Learning Server
+El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.blob.core.windows.net/ecobici-data/ecobici_2010_2017.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
+
+Para poder acceder al dataset desde el MSML en Linux, debemos crear un **mount persistente** para que se vea como un directorio del OS.
+
+1. Hacer `ssh` a tu VM que tiene el MS Machine Learning Server. Si has seguido esta guía, debe ser `ssh ecobici@rstudioserver.southcentralus.cloudapp.azure.com`
+2. Instalar `cifs-utils`
+```
+sudo apt-get update
+sudo apt-get install cifs-utils
+```
+3. Crea un mount point en el server usando `sudo mkdir /mnt/ecobici-data`
+4. Probar el mount point con el siguiente comando
+```
+sudo mount -t cifs //<nombre_storage_account>.file.core.windows.net/ecobici-data /mnt/ecobici-data -o vers=3.0,username=<nombre_storage_account>,password=“Nh4JtXDnVDU1bx/SJbQG+syEYGSLHhen8Qo/+0QGSrjolhl93maUgN97RKXJcHvfNoJyxvs9ApPnodhW/2gC2w==“,dir_mode=0755,file_mode=0755,serverino
+```
+Aquí el `nombre_storage_account` se encuentra en tus resources, en tu _home_ de Azure. El storage account key lo puedes encontrar dentro de Storage Account, en la sección _Access Keys_. Copia la 1a llave en el comando de arriba.
+5. Ahora volverlo permanente con el siguiente comando
+```
+sudo bash -c 'echo "//<nombre_storage_account>.file.core.windows.net/ecobici-data /mnt/ecobici-data cifs nofail,vers=3.0,username=<nombre_storage_account>,password=<storage_account_key>,dir_mode=0755,file_mode=0755,serverino" >> /etc/fstab'
+```
+Sigue las mismas indicaciones que el comando de arriba.
+
+
+
 ## Clonando el repo y bajando el proyecto
-TBD
+El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.blob.core.windows.net/ecobici-data/ecobici_2010_2017.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
+
 
