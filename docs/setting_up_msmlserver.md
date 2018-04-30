@@ -72,7 +72,7 @@ Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e
 Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
 
 ## Permitiendo el acceso al dataset desde Microsoft Machine Learning Server
-El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.blob.core.windows.net/ecobici-data/ecobici_2010_2017.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
+El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici_2010_2017.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
 
 Para poder acceder al dataset desde el MSML en Linux, debemos crear un **mount persistente** para que se vea como un directorio del OS.
 
@@ -85,18 +85,13 @@ sudo apt-get install cifs-utils
 3. Crea un mount point en el server usando `sudo mkdir /mnt/ecobici-data`
 4. Probar el mount point con el siguiente comando
 ```
-sudo mount -t cifs //<nombre_storage_account>.file.core.windows.net/ecobici-data /mnt/ecobici-data -o vers=3.0,username=<nombre_storage_account>,password=“Nh4JtXDnVDU1bx/SJbQG+syEYGSLHhen8Qo/+0QGSrjolhl93maUgN97RKXJcHvfNoJyxvs9ApPnodhW/2gC2w==“,dir_mode=0755,file_mode=0755,serverino
+sudo mount -t cifs //msmldiag167.file.core.windows.net/ecobici-file-share /mnt/ecobici-data -o vers=2.1,username=msmldiag167,password=“Nh4JtXDnVDU1bx/SJbQG+syEYGSLHhen8Qo/+0QGSrjolhl93maUgN97RKXJcHvfNoJyxvs9ApPnodhW/2gC2w==“,dir_mode=0755,file_mode=0755
 ```
-Aquí el `nombre_storage_account` se encuentra en tus resources, en tu _home_ de Azure. El storage account key lo puedes encontrar dentro de Storage Account, en la sección _Access Keys_. Copia la 1a llave en el comando de arriba.
-5. Ahora volverlo permanente con el siguiente comando
-```
-sudo bash -c 'echo "//<nombre_storage_account>.file.core.windows.net/ecobici-data /mnt/ecobici-data cifs nofail,vers=3.0,username=<nombre_storage_account>,password=<storage_account_key>,dir_mode=0755,file_mode=0755,serverino" >> /etc/fstab'
-```
-Sigue las mismas indicaciones que el comando de arriba.
+Lo que va a hacer este comando es crear un _mount volume_ de **mi propio storage account** a **tu VM en Azure**. Esto lo hacemos para evitar que tengas que descargar los 16GB y más bien te conectes directito al file share que yo cree.
 
-
+Si acaso esto no sirviera, entonces será necesario descargar el dataset y crear el file share en **tu propia storage account**. Refiérete a [esta documentación para ello](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-file-share#Create%20file%20share%20through%20the%20Portal)
 
 ## Clonando el repo y bajando el proyecto
-El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.blob.core.windows.net/ecobici-data/ecobici_2010_2017.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
+El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici_2010_2017.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
 
 
