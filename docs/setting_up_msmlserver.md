@@ -49,7 +49,9 @@ Los siguientes pasos deben ejecutarse con privilegios de `root`.
 11. Instala el RStudio Server con gdebi: `$sudo gdebi rstudio-server-1.1.447-amd64.deb`
 12. Con privilegios de root, edita el archivo de variables de ambiente de R con el siguiente comando `sudo nano /opt/microsoft/mlserver/9.3.0/runtime/R/etc/Renviron`
 13. Entra la línea `R_LIBS_SITE=/opt/microsoft/mlserver/9.3.0/libraries/RServer/` al final del archivo. Debe quedar como la imagen muestra
+
 ![](https://i.imgur.com/cJugeWm.png)
+
 14. Reinicia la VM desde la consola
 12. Abre una ventana de browser y ve a `http://<server-ip>:8787`
 
@@ -76,9 +78,7 @@ Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e
 18. Buscar la IP de tu VM. Si seguiste el ejemplo al pie de la letra, debe tener el nombre de `msmlserver`
 19. En "Configuration", en la parte de abajo, hay un campo donde te permite poner el DNS name. Bautízala con el nombre de “rstudioserver”.
 
-
 !￼[](https://i.imgur.com/Di0rvHX.png)
-
 
 Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
 
