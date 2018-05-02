@@ -47,6 +47,10 @@ Los siguientes pasos deben ejecutarse con privilegios de `root`.
 9. Instala gdebi: `$ sudo apt-get install gdebi-core`
 10. Baja el RStudio Server: `$ wget https://download2.rstudio.org/rstudio-server-1.1.447-amd64.deb`
 11. Instala el RStudio Server con gdebi: `$sudo gdebi rstudio-server-1.1.447-amd64.deb`
+12. Con privilegios de root, edita el archivo de variables de ambiente de R con el siguiente comando `sudo nano /opt/microsoft/mlserver/9.3.0/runtime/R/etc/Renviron`
+13. Entra la línea `R_LIBS_SITE=/opt/microsoft/mlserver/9.3.0/libraries/RServer/` al final del archivo. Debe quedar como la imagen muestra
+![](https://i.imgur.com/cJugeWm.png)
+14. Reinicia la VM desde la consola
 12. Abre una ventana de browser y ve a `http://<server-ip>:8787`
 
 No jaló, o se queda pendejo ¿verdad? :D
