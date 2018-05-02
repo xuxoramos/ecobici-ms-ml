@@ -72,7 +72,7 @@ Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e
 18. Buscar la IP de tu VM. Si seguiste el ejemplo al pie de la letra, debe tener el nombre de `msmlserver`
 19. En "Configuration", en la parte de abajo, hay un campo donde te permite poner el DNS name. Bautízala con el nombre de “rstudioserver”.
 
-￼![](https://imgur.com/Di0rvHX)
+!￼[Imgur](https://i.imgur.com/Di0rvHX.png)
 
 Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
 
