@@ -100,4 +100,6 @@ Si acaso esto no sirviera, entonces será necesario descargar el dataset, y crea
 
 24. Entra al RStudio Server que instalamos en tu VM con el MS Machine Learning Server: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
 
-25. Ejecutar el siguiente comando para importar el CSV de ecobici: `ecobici_data <- rxImport('/mnt/ecobici-data/ecobici_2010_2017.csv')`. Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
+25. Hacer checkout de este repo desde RStudio Server en tu VM.
+
+26. Ejecutar el siguiente comando para importar el CSV de ecobici: `ecobici_data <- rxImport('/mnt/ecobici-data/ecobici_2010_2017.csv')`. Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
