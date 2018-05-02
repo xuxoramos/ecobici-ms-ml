@@ -72,7 +72,9 @@ Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e
 18. Buscar la IP de tu VM. Si seguiste el ejemplo al pie de la letra, debe tener el nombre de `msmlserver`
 19. En "Configuration", en la parte de abajo, hay un campo donde te permite poner el DNS name. Bautízala con el nombre de “rstudioserver”.
 
+
 !￼[](https://i.imgur.com/Di0rvHX.png)
+
 
 Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
 
@@ -95,5 +97,7 @@ sudo mount -t cifs //msmldiag167.file.core.windows.net/ecobici-file-share /mnt/e
 Lo que va a hacer este comando es crear un _mount volume_ de **mi propio storage account** a **tu VM en Azure**. Esto lo hacemos para evitar que tengas que descargar los 16GB y más bien te conectes directito al file share que yo cree.
 
 Si acaso esto no sirviera, entonces será necesario descargar el dataset, y crear el file share en **tu propia storage account**. Refiérete a [esta documentación para ello](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-file-share#Create%20file%20share%20through%20the%20Portal).
+
 24. Entra al RStudio Server que instalamos en tu VM con el MS Machine Learning Server: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
+
 25. Ejecutar el siguiente comando para importar el CSV de ecobici: `ecobici_data <- rxImport('/mnt/ecobici-data/ecobici_2010_2017.csv')`. Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
