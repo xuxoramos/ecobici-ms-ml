@@ -27,7 +27,7 @@ VM images include the custom R packages and Python libraries from Machine Learni
 - Nombre: `msmlserver`
 - Usuario: `ecobici`
 - Región: `South Central US` (porque 'latencia')
-- Tipo de VM: `D3S_v2` (poco menos de $2.00 pesos la hora)
+- Tipo de VM: `DS3_v2` (poco menos de $5.00 pesos la hora)
 - Si ya tienes recursos creados en tu cuenta de Azure, el Wizard te permitirá asignar Network Security Groups, Resource Groups y Storage Accounts que ya tengas creadas. De lo contrario, deja los defaults.
 - Para este ejemplo, deja el tipo de autenticación con `**Password**`
 
@@ -53,7 +53,7 @@ Los siguientes pasos deben ejecutarse con privilegios de `root`.
 ![](https://i.imgur.com/cJugeWm.png)
 
 14. Reinicia la VM desde la consola
-12. Abre una ventana de browser y ve a `http://<server-ip>:8787`
+15. Abre una ventana de browser y ve a `http://<server-ip>:8787`
 
 No jaló, o se queda pendejo ¿verdad? :D
 
@@ -62,9 +62,9 @@ RStudio Server uses port 8787. The default configuration for the Azure VM does n
 
 ## Probando el RStudio Server
 
-￼13. Vuelve a abrir una ventana de browser y ve de nuevo a `http://<server-ip>:8787`
-14. Usa tu mismo usr y pass que la Linux VM de Azure que acabas de crear. Puedes crear más usuarios de la misma manera que los crearías para Linux.
-15. Checa que en el output de inicio en RStudio Server diga algo como:
+￼16. Vuelve a abrir una ventana de browser y ve de nuevo a `http://<server-ip>:8787`
+17. Usa tu mismo usr y pass que la Linux VM de Azure que acabas de crear. Puedes crear más usuarios de la misma manera que los crearías para Linux.
+18. Checa que en el output de inicio en RStudio Server diga algo como:
 ```
 Loading Microsoft Machine Learning Server packages, version 9.3.0.
 Type 'readme()' for release notes, privacy() for privacy policy, or
@@ -75,28 +75,28 @@ Si tienes esto, ya tienes un RStudio Server Community cuyo R binary es el Micros
 ## Accediendo por DNS en lugar de IP
 Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e IPs fijas. Este ejemplo usa IP dinámica porque queremos mantener el costo tan bajo como sea posible, y por tanto, cada vez que arranques tu VM va tener una nueva IP. Esto hace que el seguir estos ejemplos sea inconveniente en varias sesiones, y para ello tendremos que bautizar este setup con algún nombre.
 
-16. Ir a [https://portal.azure.com](https://portal.azure.com)
-17. Ir a "Resources"
-18. Buscar la IP de tu VM. Si seguiste el ejemplo al pie de la letra, debe tener el nombre de `msmlserver`
-19. En "Configuration", en la parte de abajo, hay un campo donde te permite poner el DNS name. Bautízala con el nombre de “rstudioserver”.
+19. Ir a [https://portal.azure.com](https://portal.azure.com)
+20. Ir a "Resources"
+21. Buscar la IP de tu VM. Si seguiste el ejemplo al pie de la letra, debe tener el nombre de `msmlserver`
+22. En "Configuration", en la parte de abajo, hay un campo donde te permite poner el DNS name. Bautízala con el nombre de “rstudioserver”.
 
 !￼[](https://i.imgur.com/Di0rvHX.png)
 
 Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
 
 ## Permitiendo el acceso al dataset desde Microsoft Machine Learning Server
-El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici_2010_2017.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
+El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici_2010_2017-final.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
 
 Para poder acceder al dataset desde la VM con el MSML en Linux, debemos crear un **mount** desde mi Azure file share para que se vea como un directorio del OS.
 
-20. Hacer `ssh` a tu VM que tiene el MS Machine Learning Server. Si has seguido esta guía, debe ser `ssh ecobici@rstudioserver.southcentralus.cloudapp.azure.com`
-21. Instalar `cifs-utils`
+23. Hacer `ssh` a tu VM que tiene el MS Machine Learning Server. Si has seguido esta guía, debe ser `ssh ecobici@rstudioserver.southcentralus.cloudapp.azure.com`
+24. Instalar `cifs-utils`
 ```
 sudo apt-get update
 sudo apt-get install cifs-utils
 ```
-22. Crea un mount point en tu VM usando `sudo mkdir /mnt/ecobici-data`
-23. Probar el mount point con el siguiente comando
+25. Crea un mount point en tu VM usando `sudo mkdir /mnt/ecobici-data`
+26. Probar el mount point con el siguiente comando
 ```
 sudo mount -t cifs //msmldiag167.file.core.windows.net/ecobici-file-share /mnt/ecobici-data -o vers=3.0,username=msmldiag167,password=Nh4JtXDnVDU1bx/SJbQG+syEYGSLHhen8Qo/+0QGSrjolhl93maUgN97RKXJcHvfNoJyxvs9ApPnodhW/2gC2w==,dir_mode=0755,file_mode=0755,sec=ntlmssp
 ```
@@ -104,6 +104,6 @@ Lo que va a hacer este comando es crear un _mount volume_ de **mi propio storage
 
 Si acaso esto no sirviera, entonces será necesario descargar el dataset, y crear el file share en **tu propia storage account**. Refiérete a [esta documentación para ello](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-file-share#Create%20file%20share%20through%20the%20Portal).
 
-24. Entra al RStudio Server que instalamos en tu VM con el MS Machine Learning Server: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
-25. Hacer checkout de este repo desde RStudio Server en tu VM.
-26. Ejecutar el siguiente comando para importar el CSV de ecobici: `ecobici_data <- rxImport('/mnt/ecobici-data/ecobici_2010_2017.csv')`. Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
+27. Entra al RStudio Server que instalamos en tu VM con el MS Machine Learning Server: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
+28. Hacer checkout de este repo desde RStudio Server en tu VM.
+29. Ejecutar el siguiente comando para importar el CSV de ecobici: `ecobici_data <- rxImport('/mnt/ecobici-data/ecobici_2010_2017-final.csv')`. Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
