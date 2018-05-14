@@ -79,9 +79,9 @@ Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e
 21. Buscar la IP de tu VM. Si seguiste el ejemplo al pie de la letra, debe tener el nombre de `msmlserver`
 22. En _Configuration_, en la parte de abajo, hay un campo donde te permite poner el DNS name. Bautízala con el nombre de _rstudioserver_.
 
-!￼[](https://i.imgur.com/Di0rvHX.png)
-
 Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
+
+!￼[](https://i.imgur.com/Di0rvHX.png)
 
 ## Permitiendo el acceso al dataset desde Microsoft Machine Learning Server
 El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici_2010_2017-final.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
