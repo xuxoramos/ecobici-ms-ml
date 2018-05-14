@@ -73,9 +73,9 @@ Type 'readme()' for release notes, privacy() for privacy policy, or
 ```
 Si tienes esto, ya tienes un RStudio Server Community cuyo R binary es el Microsoft Machine Learning Server.
 
-![](https://i.imgur.com/Di0rvHX.png)
-
 ## Accediendo por DNS en lugar de IP
+
+![](https://i.imgur.com/Di0rvHX.png)
 
 Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e IPs fijas. Este ejemplo usa IP dinámica porque queremos mantener el costo tan bajo como sea posible, y por tanto, cada vez que arranques tu VM va tener una nueva IP. Esto hace que el seguir estos ejemplos sea inconveniente en varias sesiones, y para ello tendremos que bautizar este setup con algún nombre.
 
