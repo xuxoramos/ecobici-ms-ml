@@ -71,7 +71,7 @@ Loading Microsoft Machine Learning Server packages, version 9.3.0.
 Type 'readme()' for release notes, privacy() for privacy policy, or
 'RevoLicense()' for licensing information.
 ```
-Si tienes esto, ya tienes un RStudio Server Community cuyo R binary es el Microsoft Machine Learning Server. ¡Congrats!
+Si tienes esto, ya tienes un RStudio Server Community cuyo R binary es el Microsoft Machine Learning Server.
 
 ## Accediendo por DNS en lugar de IP
 
