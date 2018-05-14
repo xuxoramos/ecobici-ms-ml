@@ -61,7 +61,6 @@ No jaló, o se queda pendejo ¿verdad? :D
 RStudio Server uses port 8787. The default configuration for the Azure VM does not open this port. To do that, you must go to the Azure portal and elect the proper Network Security Group. Select the All Settings option and choose Inbound security rules. Add a new rule for RStudio. Name the rule, choose Any for the Protocol, and add port 8787 to the destination port range. Click OK to save your changes. You should now be able to access RStudio using a browser.
 
 ## Probando el RStudio Server
-
 ￼16. Vuelve a abrir una ventana de browser y ve de nuevo a `http://<server-ip>:8787`, donde el <server-ip> es la IP asignada por Azure.
 17. Usa tu mismo usr y pass que la Linux VM de Azure que acabas de crear. Puedes crear más usuarios de la misma manera que los crearías para Linux.
 18. Checa que en el output de inicio en RStudio Server diga algo como:
@@ -78,7 +77,7 @@ Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e
 19. Ir a [https://portal.azure.com](https://portal.azure.com)
 20. Ir a "Resources"
 21. Buscar la IP de tu VM. Si seguiste el ejemplo al pie de la letra, debe tener el nombre de `msmlserver`
-22. En "Configuration", en la parte de abajo, hay un campo donde te permite poner el DNS name. Bautízala con el nombre de 'rstudioserver'.
+22. En _Configuration_, en la parte de abajo, hay un campo donde te permite poner el DNS name. Bautízala con el nombre de _rstudioserver_.
 
 !￼[](https://i.imgur.com/Di0rvHX.png)
 
