@@ -60,6 +60,8 @@ No jaló, o se queda pendejo ¿verdad? :D
 ## Abriendo puertos en el Network Security Group
 RStudio Server uses port 8787. The default configuration for the Azure VM does not open this port. To do that, you must go to the Azure portal and elect the proper Network Security Group. Select the All Settings option and choose Inbound security rules. Add a new rule for RStudio. Name the rule, choose Any for the Protocol, and add port 8787 to the destination port range. Click OK to save your changes. You should now be able to access RStudio using a browser.
 
+![](https://i.imgur.com/mD8sjeV.png)
+
 ## Probando el RStudio Server
 ￼16. Vuelve a abrir una ventana de browser y ve de nuevo a `http://<server-ip>:8787`, donde el <server-ip> es la IP asignada por Azure.
 17. Usa tu mismo usr y pass que la Linux VM de Azure que acabas de crear. Puedes crear más usuarios de la misma manera que los crearías para Linux.
@@ -74,12 +76,12 @@ Si tienes esto, ya tienes un RStudio Server Community cuyo R binary es el Micros
 ## Accediendo por DNS en lugar de IP
 Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e IPs fijas. Este ejemplo usa IP dinámica porque queremos mantener el costo tan bajo como sea posible, y por tanto, cada vez que arranques tu VM va tener una nueva IP. Esto hace que el seguir estos ejemplos sea inconveniente en varias sesiones, y para ello tendremos que bautizar este setup con algún nombre.
 
-19. Ir a [https://portal.azure.com](https://portal.azure.com)
-20. Ir a "Resources"
-21. Buscar la IP de tu VM. Si seguiste el ejemplo al pie de la letra, debe tener el nombre de `msmlserver`
+19. Ir a [https://portal.azure.com](https://portal.azure.com).
+20. Ir a "Resources".
+21. Buscar la IP de tu VM. Si seguiste el ejemplo al pie de la letra, debe tener el nombre de `msmlserver`.
 22. En _Configuration_, en la parte de abajo, hay un campo donde te permite poner el DNS name. Bautízala con el nombre de _rstudioserver_.
 
-Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
+Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787).
 
 !￼[](https://i.imgur.com/Di0rvHX.png)
 
