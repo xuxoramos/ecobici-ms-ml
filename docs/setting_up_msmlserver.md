@@ -87,7 +87,7 @@ Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e
 Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787).
 
 ## Permitiendo el acceso al dataset desde Microsoft Machine Learning Server
-El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici_2010_2017-final.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
+El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici-small.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
 
 Para poder acceder al dataset desde la VM con el MSML en Linux, debemos crear un **mount** desde mi Azure file share para que se vea como un directorio del OS.
 
@@ -108,4 +108,14 @@ Si acaso esto no sirviera, entonces será necesario descargar el dataset, y crea
 
 27. Entra al RStudio Server que instalamos en tu VM con el MS Machine Learning Server: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787)
 28. Hacer checkout de este repo desde RStudio Server en tu VM.
-29. Ejecutar el siguiente comando para importar el CSV de ecobici: `ecobici_data <- rxImport('/mnt/ecobici-data/ecobici_2010_2017-final.csv')`. Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
+29. Ejecutar el siguiente snippet para importar el CSV de ecobici
+```
+ecobiciinputFile <- file.path('/mnt/ecobici-data', "ecobici-small.csv")
+ecobicioutputFile <- file.path('/mnt/ecobici-data', "ecobici-small.xdf")
+ecobici_datasource <- rxImport(inData = ecobiciinputFile,
+                               outFile = ecobicioutputFile, 
+                               overwrite = TRUE,
+                               numRows = 5)
+```
+Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
+29. Ejecutar el siguiente comando para importar el CSV de ecobici:`ecobici_data <- rxImport('/mnt/ecobici-data/ecobici-small.csv')`. Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
