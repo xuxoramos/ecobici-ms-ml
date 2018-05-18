@@ -20,3 +20,6 @@ Los datos originalmente fueron descargados desde el website mencionado arriba, r
 
 Posteriormente se encerraron en comillas tanto nombres de columnas como valores de cada renglón. Esto porque la función `rxImport` de ML Server tiene una bronca con los formatos de fechas, así que todo lo convertimos a strings.
 
+Finalmente, del archivo `ecobici_2010_2017-final.csv` fueron extraídos 3.7M con el comando `head -l 3740000 > ecobici-small.csv`.
+
+La razón por la cual extrajimos 3.7M de registros solamente son las limitantes de memoria, no de R, sino de la máquina con la cual trabajaremos. En este caso levantaremos una [D4S_v3](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) con 16GB de memoria, y esta cantidad de registros representan alrededor de 12GB de memoria descomprimidos.
