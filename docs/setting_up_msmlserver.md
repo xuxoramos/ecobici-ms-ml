@@ -121,4 +121,6 @@ ecobici_datasource <- rxImport(inData = ecobiciinputFile,
 ```
 Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
 
+30. Finalmente para utilizar este repo, particularmente el paquete `dplyrXdf`, debes desinstalar y reinstalar los paquetes `httr` y `RCurl` con el comando `remove.packages(c('curl','httr'))`, luego en el menú dar _Session -> Restart R_, luego volver a instalarlos con `install.packages(c("curl", "httr"))`.
+
 **Lixto, ya podemos comenzar con el análisis.**
