@@ -13,3 +13,8 @@ La intención de este ejemplo es comparar codo a codo _vanilla R_ y el backend d
 
 ## ¿Por qué los datos de ecobici?
 ¡Porque son un ch...orro! Es un CSV de 16GB sin comprimir, y por tanto ofrece una buena oportunidad para demostrar las ventajas de MS ML Server sobre el R que traemos todos en nuestras laps. Puedes ver más detalles sobre los datos en [/data/README.md](https://github.com/datankai/ecobici-ms-ml/blob/master/data/README.md).
+
+# Instrucciones para replicar el ejemplo
+- Lee este documento
+- Checa la [documentación sobre los datos](https://github.com/datankai/ecobici-ms-ml/blob/master/docs/setting_up_msmlserver.md)
+- Checa la documentación sobre [cómo configurar el Microsoft Machine Learning Server](https://github.com/datankai/ecobici-ms-ml/blob/master/docs/setting_up_msmlserver.md).
