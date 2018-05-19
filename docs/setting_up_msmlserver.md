@@ -92,10 +92,12 @@ El repo y el dataset están separados. El dataset puede encontrarse [aquí](http
 Para poder acceder al dataset desde la VM con el MSML en Linux, debemos crear un **mount** desde mi Azure file share para que se vea como un directorio del OS.
 
 23. Hacer `ssh` a tu VM que tiene el MS Machine Learning Server. Si has seguido esta guía, debe ser `ssh ecobici@rstudioserver.southcentralus.cloudapp.azure.com`
-24. Instalar `cifs-utils`
+24. Instalar `cifs-utils` y otros paquetes que van a ser necesarios.
 ```
 sudo apt-get update
 sudo apt-get install cifs-utils
+sudo apt-get install libssl-dev
+sudo apt-get install libcurl4-openssl-dev
 ```
 25. Crea un mount point en tu VM usando `sudo mkdir /mnt/ecobici-data`
 26. Probar el mount point con el siguiente comando
