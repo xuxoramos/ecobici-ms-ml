@@ -118,4 +118,5 @@ ecobici_datasource <- rxImport(inData = ecobiciinputFile,
                                numRows = 5)
 ```
 Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
-29. Ejecutar el siguiente comando para importar el CSV de ecobici:`ecobici_data <- rxImport('/mnt/ecobici-data/ecobici-small.csv')`. Nota que estamos usando las funciones de Microsoft R Server y no el `readr::read_csv`, ni el `base::read.csv`.
+
+**Lixto, ya podemos comenzar con el análisis.**
