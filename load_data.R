@@ -4,6 +4,7 @@
 # 3. 'sudo mount -t cifs //msmldiag167.file.core.windows.net/ecobici-file-share /mnt/ecobici-data -o vers=3.0,username=msmldiag167,password=Nh4JtXDnVDU1bx/SJbQG+syEYGSLHhen8Qo/+0QGSrjolhl93maUgN97RKXJcHvfNoJyxvs9ApPnodhW/2gC2w==,dir_mode=0777,file_mode=0777,sec=ntlmssp' para montar en local el Azure File Share.
 library(devtools)
 library(dplyr)
+library(dplyrXdf)
 
 # Estas son las rutas de archivo de entrada y de salida. Vamos a transformar un CSV de 3.7M de registros a formato XDF, un formato binario que optimiza el almacenamiento por bloques
 ecobicismallinputFile <- file.path('/mnt/ecobici-data', "ecobici-small.csv")
@@ -16,7 +17,7 @@ ecobicibigoutputFile <- file.path('./data', "ecobici_2010_2017-final.xdf")
 ecobicibigdatasource <- rxImport(inData = ecobicibiginputFile,
                                outFile = ecobicibigoutputFile, 
                                overwrite = TRUE,
-                               numRows = 7500000,
+                               numRows = 1000000, # cambiar esto para regular el número de registros leídos, o borrarlo para leer todo el archivo, aunque recomendamos leer máximo 7.5M de ellos
                                varsToDrop = c('fecha_arribo_completa','fecha_retiro_completa','hora_arribo_copy', 'hora_retiro_copy', 'segundo_retiro','segundo_arribo'),
                                transforms = list(fecha_retiro=as.Date(fecha_retiro, format='%Y-%m-%d'),
                                                  fecha_arribo=as.Date(fecha_arribo, format='%Y-%m-%d'),
@@ -39,19 +40,13 @@ ecobicibigdatasource <- rxImport(inData = ecobicibiginputFile,
 # Leer gran archivote
 ecobicibigdatasource <- RxXdfData(file = ecobicibigoutputFile)
 
-# bici + genero_usuario + edad_usuario + mes_retiro + dia_semana_retiro + delegacion_retiro + colonia_retiro + mes_arribo + dia_semana_arribo + delegacion_arribo + colonia_arribo, data = ecobici_train, 
-ecobicibigdatasource <- ecobicibigdatasource %>% mutate (
-  bici = factor(bici),
-  genero_usuario = factor(genero_usuario)
-)
-
 # Resúmen del dataset creado
-ecobici_summary <- rxSummary(~., data = ecobici_bigdata)
+ecobici_summary <- rxSummary(~., data = ecobicibigdatasource)
 
-# Promedio de todo el dataset
+# Promedio de duracion_viaje_horas de todo el dataset
 ecobici_summary$sDataFrame %>% filter(Name == 'duracion_viaje_horas')
 
-# Histogram
+# Histograma de las duracion_viaje_horas. Podemos ver que se tiene una distribución log-normal. Las distribuciones log-normales siguen fenómenos que no pueden tener valores negativos, como las transacciones de dinero, y donde hay muchas de monto bajo, y pocas de monto alto.
 rxHistogram(formula=~F(duracion_viaje_horas), data=ecobicibigdatasource)
 
 # Partición del dataset en set de entrenamiento y pruebas. Esta función creará los 2 archivos, así que se especifican prefijos y sufijos.
@@ -79,6 +74,9 @@ ecobici_test <- rxReadXdf('./data/ecobici_2010_2017.splitVar.Test.xdf')
 # 31min de entrenamiento para la mitad de registros de ecobici
 ecobici_forest <- rxDForest(formula = duracion_viaje_horas ~ bici + genero_usuario + edad_usuario + mes_retiro + dia_semana_retiro + delegacion_retiro + colonia_retiro + mes_arribo + dia_semana_arribo + delegacion_arribo + colonia_arribo, data = ecobici_train, 
           maxDepth = 5, nTree = 200, mTry = 2, importance = T)
+
+# En este plot podemos ver cómo el out-of-bag error del RF va convergiendo a .35, que es la R^2, la explicación de varianza.
+plot(ecobici_forest)
 
 # Ejecutar la predicción con el set de pruebas.
 pred <- rxPredict(ecobici_forest, ecobici_test)
