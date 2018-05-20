@@ -27,9 +27,23 @@ VM images include the custom R packages and Python libraries from Machine Learni
 - Nombre: `msmlserver`
 - Usuario: `ecobici`
 - Región: `South Central US` (porque 'latencia')
-- Tipo de VM: `DS3_v2` (poco menos de $5.00 pesos la hora)
+- Tipo de VM: `DS4_v3` (poco menos de $5.00 pesos la hora)
 - Si ya tienes recursos creados en tu cuenta de Azure, el Wizard te permitirá asignar Network Security Groups, Resource Groups y Storage Accounts que ya tengas creadas. De lo contrario, deja los defaults.
 - Para este ejemplo, deja el tipo de autenticación con `**Password**`
+
+## Alternativa: Microsoft Data Science Virtual Machine for Linux
+
+![](https://i.imgur.com/zQautwW.png)
+
+Sigue este tutorial: https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/provision-vm. Toma en cuenta la seccion anterior donde especificas usuario, nombre de la máquina, región, y tipo/tamaño de VM.
+
+Posteriormente, puedes seguir este tutorial: https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/dsvm-tools-development, particularmente para arrancar RStudio Server, dado que ya viene instalado. Si sigues esta parte, ya no tienes que seguir la parte titulada "Instalando RStudio Server Community en tu nueva VM".
+
+Lo importante en esta parte es **habilitar el RStudio Server**, porque está instalado, pero no habilitado por default. Para hacerlo, entra lo siguiente en una terminal:
+```
+$ systemctl enable rstudio-server
+$ systemctl start rstudio-server
+```
 
 ## Verificando la instalación
 7. Conéctate a la VM usando la IP pública (pronto le pondremos un nombre para darle la vuelta a la IP dinámica que te da Azure y no pagar por una fija)
