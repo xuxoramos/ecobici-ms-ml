@@ -101,7 +101,7 @@ Azure, como cualquier cloud provider que se respete, te permite IPs dinámicas e
 Esto te permitirá acceder al RStudio Server con la siguiente URL: [https://rstudioserver.southcentralus.cloudapp.azure.com:8787](https://rstudioserver.southcentralus.cloudapp.azure.com:8787).
 
 ## Permitiendo el acceso al dataset desde Microsoft Machine Learning Server
-El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici-small.csv), pero no recomendamos bajarlo, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
+El repo y el dataset están separados. El dataset puede encontrarse [aquí](https://msmldiag167.file.core.windows.net/ecobici-file-share/ecobici_2010_2017-final.csv), **pero no recomendamos bajarlo**, porque no es posible ni siquiera cargarlo en una instalación de _vanilla R_.
 
 Para poder acceder al dataset desde la VM con el MSML en Linux, debemos crear un **mount** desde mi Azure file share para que se vea como un directorio del OS.
 
